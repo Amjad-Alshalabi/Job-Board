@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'django_filters',
 
     # my apps :
+   
     'job',
+    'contact',
+    'blog',
+    'rest_framework',
      
 ]
 
@@ -137,3 +143,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'amjad.aj66@gmail.com'
+EMAIL_HOST_PASSWORD = 'wmpsvszqycqfiuys'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# LOGOUT_REDIRECT_URL = "{{% url 'accounts:profile' %}}"
