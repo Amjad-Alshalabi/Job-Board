@@ -1,146 +1,150 @@
 {% extends 'base.html' %}
 {% block body %}
-  <!-- bradcam_area  -->
-  <div class="bradcam_area bradcam_bg_1">
-      <div class="container">
-          <div class="row">
-              <div class="col-xl-12">
-                  <div class="bradcam_text">
-                      <h3>single blog</h3>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!--/ bradcam_area  -->
-
-
-   <!--================Blog Area =================-->
-   <section class="blog_area single-post-area section-padding">
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-8 posts-list">
-               <div class="single-post">
-                  <div class="feature-img">
-                     <img class="img-fluid" src="img/blog/single_blog_1.png" alt="">
-                  </div>
-                  <div class="blog_details">
-                     <h2>{{post_details}}
-                     </h2>
-                     <ul class="blog-info-link mt-3 mb-4">
-                        <li><a href="#"><i class="fa fa-user"></i> {{post_details.owner}}</a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i> {{ post_details.comments| length}} comments</a></li>
-                     </ul>
-                     <p class="excert">
-                        {{post_details.post}}
-                     </p>
-
-                  </div>
-               </div>
-               <div class="navigation-top">
-               
-                 
-               </div>
-               
-               <div class="comments-area">
-                  <h4>{{ post_details.comments| length}} comments</h4>
-                  <div class="comment-list">
-                     <div class="single-comment justify-content-between d-flex">
-                        <div class="user justify-content-between d-flex">
-                           <div class="thumb">
-                              <img src="img/comment/comment_1.png" alt="">
-                           </div>
-                           <div class="desc">
-                              <p class="comment">
-                                 {{post_details.comments.comment}}
-                              </p>
-                              <div class="d-flex justify-content-between">
-                                 <div class="d-flex align-items-center">
-                                    <h5>
-                                       Author : {{post_details.comments.owner}}
-                                    </h5>
-                                    <p class="date">{{post_details.comments..published_at}}</p>
-                                 </div>
-                                 <div class="reply-btn">
-                                    <a href="#" class="btn-reply text-uppercase">reply</a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-               </div>
-               <div class="comment-form">
-                  <h4>Leave a Reply</h4>
-                  <form class="form-contact comment_form" action="#" id="commentForm">
-                     <div class="row">
-                        <div class="col-12">
-                           <div class="form-group">
-                              <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
-                                 placeholder="Write Comment"></textarea>
-                           </div>
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="form-group">
-                              <input class="form-control" name="name" id="name" type="text" placeholder="Name">
-                           </div>
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="form-group">
-                              <input class="form-control" name="email" id="email" type="email" placeholder="Email">
-                           </div>
-                        </div>
-                        <div class="col-12">
-                           <div class="form-group">
-                              <input class="form-control" name="website" id="website" type="text" placeholder="Website">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send Message</button>
-                     </div>
-                  </form>
-               </div>
-            </div>
-            <div class="col-lg-4">
-               <div class="blog_right_sidebar">
-                  <aside class="single_sidebar_widget search_widget">
-                     <form action="#">
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                             type="submit">Add Post</button>
-                         
-                     </form>
-                 </aside>
-                
-                 <aside class="single_sidebar_widget popular_post_widget">
-                  <h3 class="widget_title">Recent Post</h3>
-                  {% for post  in recent_posts %}
-                    
-                  
-                  
-                      
-                  <div class="media post_item">
-                      <img src="img/post/post_1.png" alt="post">
-                      <div class="media-body">
-                          <a href="single-blog.html">
-                              <h3>{{post}}</h3>
-                          </a>
-                          <p>{{post.get_date}}</p>
-                      </div>
-                  </div>
-                  
-                  {% endfor %}
-             
-              </aside>
-                  
-                  
-                  
-               </div>
+{% load bootstrap5 %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+   <div class="container">
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="bradcam_text">
+               <h3>single blog</h3>
             </div>
          </div>
       </div>
-   </section>
-   <!--================ Blog Area end =================-->
-  
-   {% endblock body %}
+   </div>
+</div>
+<!--/ bradcam_area  -->
+
+
+<!--================Blog Area =================-->
+<section class="blog_area single-post-area section-padding">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-8 posts-list">
+            <div class="single-post">
+               <!-- <div class="feature-img">
+                  <img class="img-fluid" src="img/blog/single_blog_1.png" alt="">
+               </div> -->
+               <div class="blog_details">
+                  <h2>{{post_details}}
+                  </h2>
+                  <ul class="blog-info-link mt-3 mb-4">
+                     {% if post_details.owner.id == request.user.id %}
+
+                     <li><a href="{% url 'accounts:profile' %}"><i class="fa fa-user"></i> {{post_details.owner}}</a>
+                     </li>
+                     {% else %}
+                     <li><a href="{% url 'accounts:visit_profile' post_details.owner.id %}"><i class="fa fa-user"></i>
+                           {{post_details.owner}}</a></li>
+
+                     {% endif %}
+
+                     <li><a ><i class="fa fa-comments"></i> {{post_details.details.all| length}} comments</a>
+                     </li>
+                  </ul>
+                  <p class="excert">
+                     {{post_details.content}}
+                  </p>
+
+               </div>
+            </div>
+
+
+
+
+
+            <div class="comments-area">
+               <h4>{{post_details.details.all| length}}  comments</h4>
+               {% for i in post_details.details.all  %}
+               <div class="comment-list">
+                  <div class="single-comment justify-content-between d-flex">
+                     <div class="user justify-content-between d-flex">
+                        <div class="thumb">
+                           <img src="{{i.owner.profile.image.url}}" alt="Me">
+                        </div>
+                        <div class="desc">
+                           <p class="comment">
+                              {{i.comment}}
+                           </p>
+                           <div class="d-flex justify-content-between">
+                              <div class="d-flex align-items-center">
+                                 <h5>
+                                    {% if i.owner.id == request.user.id %}
+                                    
+                                    <a href="{% url 'accounts:profile' %}">{{i.owner}}</a>
+                                    {% else %}
+                                    
+                                       <a href="{% url 'accounts:visit_profile' i.owner.id %}">{{i.owner}}</a>
+                                    {% endif %}
+                                    
+                                 </h5>
+                                 <p class="date">{{i.comment_date|date:"d M o" }}</p>
+                              </div>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="comment-form">
+               <h4>Leave a Reply</h4>
+
+               <form method="post">
+                  {% csrf_token %}
+
+                  {% bootstrap_form  form %}
+                  {% buttons %}
+                  <button class="boxed-btn3 w-100" type="submit">reply</button>
+                  {% endbuttons %}
+
+               </form>
+            </div>
+            {% endif %}
+
+
+         </div>
+         <div class="col-lg-4">
+            <div class="blog_right_sidebar">
+               <aside class="single_sidebar_widget search_widget">
+                  
+                  <a href="{% url 'blog:add_post' %}">  <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">  Add
+                     Post </button></a>
+
+                  
+               </aside>
+
+               <aside class="single_sidebar_widget popular_post_widget">
+                  <h3 class="widget_title">Recent Post</h3>
+                  {% for post  in recent_posts %}
+
+
+
+
+                  <div class="media post_item">
+                     
+                     <div class="media-body">
+                        <a href="{% url 'blog:post_details' post.slug %}">
+                           <h3>{{post}}</h3>
+                        </a>
+                        <p>{{post.get_date}}</p>
+                     </div>
+                  </div>
+
+                  {% endfor %}
+
+               </aside>
+
+
+
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--================ Blog Area end =================-->
+
+{% endblock body %}

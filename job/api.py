@@ -14,7 +14,7 @@ class JobApiList(generics.ListAPIView):
 
 
 @api_view(['GET'])
-def job_list(request):
+def job_list_api(request):
     all_job = Job.objects.all()
     showdata = JobSerializers(all_job, many=True).data
 

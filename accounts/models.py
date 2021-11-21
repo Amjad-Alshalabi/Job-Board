@@ -10,7 +10,7 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete= CASCADE)
     phone_number =  models.CharField(max_length=15)
-    # country =
+    
     image = models.ImageField(upload_to = 'profile/')
 
     def __str__(self):

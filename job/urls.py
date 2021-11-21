@@ -11,11 +11,11 @@ urlpatterns = [
     path('<str:slug>', views.job_details, name = 'job_detail' ),
 
     ## Rest Api  joblist
-    path('api/job/list', api.job_list, name='job_list'),
-    path('api/job/<int:id>', api.job_detail, name = 'job_detail' ),
+    # path('api/job/list', api.job_list, name='job_list_api'),
+    # path('api/job/<int:id>', api.job_detail, name = 'job_detail' ),
     
 
     ## Class Based Views
-     path('api/job/li', api.JobApiList.as_view(), name='JobApiList'),
+    #  path('api/job/li', api.JobApiList.as_view(), name='JobApiList'),
 
 ]

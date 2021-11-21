@@ -26,9 +26,9 @@
                     <div class="job_details_header">
                         <div class="single_jobs white-bg d-flex justify-content-between">
                             <div class="jobs_left d-flex align-items-center">
-                                <div class="thumb">
-                                    <img src="img/svg_icon/1.svg" alt="">
-                                </div>
+                                
+                                <div class = "mr-4"> <img src="{{jobs.image.url}}"class="rounded" alt="Picture" style="width: 100px; height: 100px;"> </div>
+                                
                                 <div class="jobs_conetent">
                                     <a href="#"><h4>{{jobs}}</h4></a>
                                     <div class="links_locat d-flex align-items-center">
@@ -42,9 +42,8 @@
                                 </div>
                             </div>
                             <div class="jobs_right">
-                                <div class="apply_now">
-                                    <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a>
-                                </div>
+                               
+
                             </div>
                         </div>
                     </div>
@@ -80,18 +79,18 @@
                                 <li>Salary: <span>{{jobs.salary}}k/y</span></li>
                                 <li>Location: <span>California, USA</span></li>
                                 <li>Job Nature: <span> {{jobs.job_type}}</span></li>
+                                
+                                {% if jobs.owner.id == request.user.id %}
+                                <li>Author: <span> <a href="{% url 'accounts:profile' %}">{{jobs.owner}}</a> </span></li>
+                                {% else %}
+                                <li>Author: <span> <a href="{% url 'accounts:visit_profile' jobs.owner.id %}">{{jobs.owner}}</a> </span></li>
+                                {% endif %}
+                                    
+                                
                             </ul>
                         </div>
                     </div>
-                    <div class="share_wrap d-flex">
-                        <span>Share at:</span>
-                        <ul>
-                            <li><a href="#"> <i class="fa fa-facebook"></i></a> </li>
-                            <li><a href="#"> <i class="fa fa-google-plus"></i></a> </li>
-                            <li><a href="#"> <i class="fa fa-twitter"></i></a> </li>
-                            <li><a href="#"> <i class="fa fa-envelope"></i></a> </li>
-                        </ul>
-                    </div>
+                    
                     <div class="job_location_wrap">
                         <div class="job_lok_inner">
                             <div id="map" style="height: 200px;"></div>

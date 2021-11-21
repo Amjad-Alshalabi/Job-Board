@@ -27,6 +27,8 @@ def profile(request):
     profile = Profile.objects.get(user= request.user)
     return render(request, 'accounts/profile.html', {'profile':profile})
 
+
+
 def profile_edit(request):
     profile = Profile.objects.get(user = request.user)
 
@@ -43,3 +45,9 @@ def profile_edit(request):
         userform = UserForm(instance=request.user)
         profileform = ProfileForm(instance=profile)
     return render(request, 'accounts/profile_edit.html' , {'userform':userform, 'profileform':profileform})
+
+
+def visit_profile(request, id):
+
+    profile = Profile.objects.get(user=id )
+    return render(request, 'accounts/other_profile.html' , {'profile': profile}) 
